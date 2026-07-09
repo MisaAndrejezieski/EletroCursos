@@ -1,0 +1,189 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0a0e17;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+/* Header */
+.header {
+    background-color: #0d1321;
+    border-bottom: 2px solid #f0c040;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo img {
+    height: 48px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: #c0c0c0;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #f0c040;
+}
+
+.btn-entrar {
+    background: transparent;
+    color: #f0c040;
+    border: 2px solid #f0c040;
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-entrar:hover {
+    background: #f0c040;
+    color: #0d1321;
+}
+
+/* Hero */
+.hero {
+    background: linear-gradient(135deg, #0d1321 0%, #1a2744 50%, #0d1321 100%);
+    padding: 6rem 2rem;
+    text-align: center;
+    border-bottom: 2px solid #f0c040;
+}
+
+.hero-content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.hero h1 {
+    font-size: 2.8rem;
+    color: #f0c040;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: #b0b0b0;
+    margin-bottom: 2rem;
+}
+
+.btn-hero {
+    background: #f0c040;
+    color: #0d1321;
+    padding: 0.75rem 2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+.btn-hero:hover {
+    background: #ffd866;
+    transform: translateY(-2px);
+}
+
+/* Cursos */
+.cursos {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+.cursos h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #f0c040;
+    margin-bottom: 3rem;
+}
+
+.cursos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.card-curso {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 2rem;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.card-curso:hover {
+    border-color: #f0c040;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(240, 192, 64, 0.1);
+}
+
+.tag {
+    display: inline-block;
+    background: #1a2744;
+    color: #f0c040;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+}
+
+.card-curso h3 {
+    color: #ffffff;
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+}
+
+.card-curso p {
+    color: #a0a0a0;
+    margin-bottom: 1.5rem;
+}
+
+.btn-curso {
+    color: #f0c040;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.btn-curso:hover {
+    color: #ffd866;
+}
+
+/* Footer */
+.footer {
+    background: #0d1321;
+    border-top: 2px solid #1e293b;
+    text-align: center;
+    padding: 2rem;
+    color: #707070;
+    font-size: 0.9rem;
+}
