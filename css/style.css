@@ -429,3 +429,125 @@ main {
         padding: 1.25rem;
     }
 }
+
+/* ==================== PÁGINA SOBRE ==================== */
+.pagina-sobre {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.sobre-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+}
+
+.sobre-header h1 {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    color: #f0c040;
+}
+
+.sobre-header p {
+    color: #a0a0a0;
+    font-size: 1rem;
+}
+
+.sobre-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.sobre-card {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    transition: all 0.3s;
+}
+
+.sobre-card:hover {
+    border-color: #f0c040;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(240, 192, 64, 0.1);
+}
+
+.sobre-icone {
+    font-size: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: #1a2744;
+    border-radius: 50%;
+}
+
+.sobre-card h3 {
+    color: #f0c040;
+    font-size: 1.2rem;
+}
+
+.sobre-card p {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.sobre-diferenciais {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.sobre-diferenciais h2 {
+    color: #f0c040;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    text-align: center;
+}
+
+.diferenciais-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    width: 100%;
+}
+
+.diferencial-item {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.3s;
+}
+
+.diferencial-item:hover {
+    border-color: #f0c040;
+}
+
+.diferencial-item span {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+.diferencial-item p {
+    color: #c0c0c0;
+    font-size: 0.9rem;
+}
