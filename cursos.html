@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos os Cursos - EletroCursos</title>
+    <link rel="icon" href="images/EletroCurso.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <img src="images/EletroCurso.png" alt="EletroCursos">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="cursos.html" class="ativo">Cursos</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Contato</a></li>
+            </ul>
+            <a href="#" class="btn-entrar">Entrar</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="pagina-cursos">
+            <div class="pagina-cursos-header">
+                <h1>Todos os Cursos</h1>
+                <p>Escolha o curso ideal para você e comece a aprender agora mesmo.</p>
+            </div>
+
+            <div class="filtros">
+                <button class="filtro-btn ativo">Todos</button>
+                <button class="filtro-btn">Elétrica</button>
+                <button class="filtro-btn">Eletrônica</button>
+                <button class="filtro-btn">Industrial</button>
+                <button class="filtro-btn">Energia Solar</button>
+            </div>
+
+            <div class="cursos-grid-full">
+                <article class="card-curso" data-categoria="elétrica">
+                    <span class="tag">Elétrica</span>
+                    <h3>Eletricista Residencial</h3>
+                    <p>Aprenda instalações elétricas residenciais do zero, com normas técnicas e segurança. Ideal para quem quer entrar no mercado de trabalho.</p>
+                    <div class="card-info">
+                        <span>⏱ 40 horas</span>
+                        <span>📊 Iniciante</span>
+                    </div>
+                    <a href="#" class="btn-curso">Ver Detalhes</a>
+                </article>
+
+                <article class="card-curso" data-categoria="elétrica">
+                    <span class="tag">Elétrica</span>
+                    <h3>NR-10 - Segurança em Instalações Elétricas</h3>
+                    <p>Normas regulamentadoras, medidas de controle de risco e segurança em serviços com eletricidade. Certificado reconhecido.</p>
+                    <div class="card-info">
+                        <span>⏱ 20 horas</span>
+                        <span>📊 Intermediário</span>
+                    </div>
+                    <a href="#" class="btn-curso">Ver Detalhes</a>
+                </article>
+
+                <article class="card-curso" data-categoria="eletrônica">
+                    <span class="tag">Eletrônica</span>
+                    <h3>Eletrônica Básica</h3>
+                    <p>Componentes, circuitos, medições e solda. Curso prático para iniciantes que querem entender o mundo da eletrônica.</p>
+                    <div class="card-info">
+                        <span>⏱ 30 horas</span>
+                        <span>📊 Iniciante</span>
+                    </div>
+                    <a href="#" class="btn-curso">Ver Detalhes</a>
+                </article>
+
+                <article class="card-curso" data-categoria="eletrônica">
+                    <span class="tag">Eletrônica</span>
+                    <h3>Microcontroladores e Arduino</h3>
+                    <p>Programação de microcontroladores, sensores, atuadores e projetos práticos com Arduino do zero ao avançado.</p>
+                    <div class="card-info">
+                        <span>⏱ 50 horas</span>
+                        <span>📊 Intermediário</span>
+                    </div>
+                    <a href="#" class="btn-curso">Ver Detalhes</a>
+                </article>
+
+                <article class="card-curso" data-categoria="industrial">
+                    <span class="tag">Industrial</span>
+                    <h3>Comandos Elétricos</h3>
+                    <p>Motores, contatores, relés, diagramas de comando e automação industrial na prática. Essencial para o setor industrial.</p>
+                    <div class="card-info">
+                        <span>⏱ 45 horas</span>
+                        <span>📊 Intermediário</span>
+                    </div>
+                    <a href="#" class="btn-curso">Ver Detalhes</a>
+                </article>
+
+                <article class="card-curso" data-categoria="industrial">
+                    <span class="tag">Industrial</span>
+                    <h3>CLP e Automação Industrial</h3>
+                    <p>Controladores lógicos programáveis, linguagem ladder e automação de processos industriais passo a passo.</p>
+                    <div class="card-info">
+                        <span>⏱ 60 horas</span>
+                        <span>📊 Avançado</span>
+                    </div>
+                    <a href="#" class="btn-curso">Ver Detalhes</a>
+                </article>
+
+                <article class="card-curso" data-categoria="energia-solar">
+                    <span class="tag">Energia Solar</span>
+                    <h3>Energia Solar Fotovoltaica</h3>
+                    <p>Dimensionamento, instalação e manutenção de sistemas de energia solar. Mercado em alta demanda.</p>
+                    <div class="card-info">
+                        <span>⏱ 35 horas</span>
+                        <span>📊 Intermediário</span>
+                    </div>
+                    <a href="#" class="btn-curso">Ver Detalhes</a>
+                </article>
+
+                <article class="card-curso" data-categoria="energia-solar">
+                    <span class="tag">Energia Solar</span>
+                    <h3>Projetos de Energia Solar</h3>
+                    <p>Aprenda a elaborar projetos completos de energia solar, cálculos, softwares e normas do setor.</p>
+                    <div class="card-info">
+                        <span>⏱ 25 horas</span>
+                        <span>📊 Avançado</span>
+                    </div>
+                    <a href="#" class="btn-curso">Ver Detalhes</a>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 EletroCursos. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
