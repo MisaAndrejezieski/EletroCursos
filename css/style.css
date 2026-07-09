@@ -551,3 +551,99 @@ main {
     color: #c0c0c0;
     font-size: 0.9rem;
 }
+
+/* ==================== PÁGINA CONTATO ==================== */
+.pagina-contato {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.contato-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+}
+
+.contato-header h1 {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    color: #f0c040;
+}
+
+.contato-header p {
+    color: #a0a0a0;
+    font-size: 1rem;
+}
+
+.contato-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.contato-card {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.contato-card:hover {
+    border-color: #f0c040;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(240, 192, 64, 0.15);
+}
+
+.contato-icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: #1a2744;
+    border-radius: 50%;
+    color: #f0c040;
+    transition: all 0.3s;
+}
+
+.contato-card:hover .contato-icone {
+    background: #f0c040;
+    color: #0d1321;
+}
+
+.contato-card h3 {
+    color: #ffffff;
+    font-size: 1.2rem;
+}
+
+.contato-card p {
+    color: #808080;
+    font-size: 0.9rem;
+}
+
+.contato-link {
+    color: #f0c040;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: color 0.3s;
+}
+
+.contato-card:hover .contato-link {
+    color: #ffd866;
+}
