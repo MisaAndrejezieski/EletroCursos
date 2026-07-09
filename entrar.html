@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar - EletroCursos</title>
+    <link rel="icon" href="images/EletroCurso.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <img src="images/EletroCurso.png" alt="EletroCursos">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="cursos.html">Cursos</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+            <a href="entrar.html" class="btn-entrar ativo">Entrar</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="pagina-auth">
+            <div class="auth-container">
+                <!-- Abas -->
+                <div class="auth-tabs">
+                    <button class="auth-tab ativo" onclick="mostrarForm('login')">Entrar</button>
+                    <button class="auth-tab" onclick="mostrarForm('cadastro')">Criar Conta</button>
+                </div>
+
+                <!-- Formulário de Login -->
+                <form id="form-login" class="auth-form" onsubmit="fazerLogin(event)">
+                    <div class="form-group">
+                        <label for="login-email">E-mail</label>
+                        <input type="email" id="login-email" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-senha">Senha</label>
+                        <input type="password" id="login-senha" placeholder="Sua senha" required>
+                    </div>
+                    <button type="submit" class="btn-auth">Entrar</button>
+                    <p class="auth-info">Acesso gratuito ao cadastro. Cursos disponíveis após pagamento.</p>
+                </form>
+
+                <!-- Formulário de Cadastro -->
+                <form id="form-cadastro" class="auth-form hidden" onsubmit="fazerCadastro(event)">
+                    <div class="form-group">
+                        <label for="cadastro-nome">Nome Completo</label>
+                        <input type="text" id="cadastro-nome" placeholder="Seu nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cadastro-email">E-mail</label>
+                        <input type="email" id="cadastro-email" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cadastro-senha">Senha</label>
+                        <input type="password" id="cadastro-senha" placeholder="Mínimo 6 caracteres" required>
+                    </div>
+                    <button type="submit" class="btn-auth">Criar Conta</button>
+                    <p class="auth-info">Cadastro gratuito. Para acessar os cursos é necessário pagar R$ 10,00.</p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 EletroCursos. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        function mostrarForm(tipo) {
+            const tabs = document.querySelectorAll('.auth-tab');
+            const formLogin = document.getElementById('form-login');
+            const formCadastro = document.getElementById('form-cadastro');
+
+            tabs.forEach(tab => tab.classList.remove('ativo'));
+
+            if (tipo === 'login') {
+                tabs[0].classList.add('ativo');
+                formLogin.classList.remove('hidden');
+                formCadastro.classList.add('hidden');
+            } else {
+                tabs[1].classList.add('ativo');
+                formCadastro.classList.remove('hidden');
+                formLogin.classList.add('hidden');
+            }
+        }
+
+        function fazerLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const senha = document.getElementById('login-senha').value;
+            
+            // Simulação - depois conectamos ao backend
+            alert('Login simulado! Em breve conectado ao backend.\nEmail: ' + email);
+        }
+
+        function fazerCadastro(event) {
+            event.preventDefault();
+            const nome = document.getElementById('cadastro-nome').value;
+            const email = document.getElementById('cadastro-email').value;
+            const senha = document.getElementById('cadastro-senha').value;
+            
+            // Simulação - depois conectamos ao backend
+            alert('Cadastro simulado! Em breve conectado ao backend.\nNome: ' + nome + '\nEmail: ' + email);
+        }
+    </script>
+</body>
+</html>
