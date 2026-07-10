@@ -19,7 +19,7 @@
                 <li><a href="sobre.html">Sobre</a></li>
                 <li><a href="contato.html">Contato</a></li>
             </ul>
-            <a href="#" class="btn-sair" id="btn-sair" onclick="sair()">Sair</a>
+            <a href="#" class="btn-sair" onclick="sair()">Sair</a>
         </nav>
     </header>
 
@@ -27,40 +27,203 @@
         <section class="pagina-admin">
             <div class="admin-header">
                 <h1>Painel de Administração</h1>
-                <p>Gerencie seus cursos, alunos e pagamentos.</p>
+                <p>Gerencie cursos, alunos e pagamentos.</p>
             </div>
 
-            <div class="admin-grid">
-                <div class="admin-card">
-                    <div class="admin-icone">📚</div>
-                    <h3>Cursos</h3>
-                    <p>8 cursos cadastrados</p>
-                    <button class="btn-admin" onclick="alert('Funcionalidade em desenvolvimento!')">Gerenciar</button>
+            <!-- Dashboard -->
+            <div class="admin-dashboard" id="admin-dashboard">
+                <div class="dash-card">
+                    <div class="dash-icone">📚</div>
+                    <div class="dash-info">
+                        <span class="dash-numero" id="total-cursos">8</span>
+                        <span class="dash-label">Cursos</span>
+                    </div>
                 </div>
-
-                <div class="admin-card">
-                    <div class="admin-icone">👥</div>
-                    <h3>Alunos</h3>
-                    <p>Alunos inscritos</p>
-                    <button class="btn-admin" onclick="alert('Funcionalidade em desenvolvimento!')">Gerenciar</button>
+                <div class="dash-card">
+                    <div class="dash-icone">👥</div>
+                    <div class="dash-info">
+                        <span class="dash-numero" id="total-alunos">0</span>
+                        <span class="dash-label">Alunos</span>
+                    </div>
                 </div>
-
-                <div class="admin-card">
-                    <div class="admin-icone">💰</div>
-                    <h3>Pagamentos</h3>
-                    <p>Pagamentos recebidos</p>
-                    <button class="btn-admin" onclick="alert('Funcionalidade em desenvolvimento!')">Gerenciar</button>
+                <div class="dash-card">
+                    <div class="dash-icone">✅</div>
+                    <div class="dash-info">
+                        <span class="dash-numero" id="total-pagos">0</span>
+                        <span class="dash-label">Pagantes</span>
+                    </div>
                 </div>
+                <div class="dash-card">
+                    <div class="dash-icone">💰</div>
+                    <div class="dash-info">
+                        <span class="dash-numero" id="total-receita">R$ 0</span>
+                        <span class="dash-label">Receita</span>
+                    </div>
+                </div>
+            </div>
 
-                <div class="admin-card">
-                    <div class="admin-icone">⚙️</div>
-                    <h3>Configurações</h3>
-                    <p>Configurações da plataforma</p>
-                    <button class="btn-admin" onclick="alert('Funcionalidade em desenvolvimento!')">Gerenciar</button>
+            <!-- Tabs Admin -->
+            <div class="admin-tabs">
+                <button class="admin-tab ativo" onclick="mostrarSecao('cursos')">Cursos</button>
+                <button class="admin-tab" onclick="mostrarSecao('alunos')">Alunos</button>
+                <button class="admin-tab" onclick="mostrarSecao('pagamentos')">Pagamentos</button>
+                <button class="admin-tab" onclick="mostrarSecao('config')">Configurações</button>
+            </div>
+
+            <!-- Seção Cursos -->
+            <div class="admin-secao" id="secao-cursos">
+                <div class="secao-header">
+                    <h2>Gerenciar Cursos</h2>
+                    <button class="btn-add" onclick="abrirModalCurso()">+ Novo Curso</button>
+                </div>
+                <div class="tabela-container">
+                    <table class="tabela-admin">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Categoria</th>
+                                <th>Carga Horária</th>
+                                <th>Nível</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-cursos"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Seção Alunos -->
+            <div class="admin-secao hidden" id="secao-alunos">
+                <div class="secao-header">
+                    <h2>Alunos Cadastrados</h2>
+                    <button class="btn-add" onclick="exportarAlunos()">Exportar CSV</button>
+                </div>
+                <div class="tabela-container">
+                    <table class="tabela-admin">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th>Status</th>
+                                <th>Data Cadastro</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-alunos"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Seção Pagamentos -->
+            <div class="admin-secao hidden" id="secao-pagamentos">
+                <div class="secao-header">
+                    <h2>Pagamentos</h2>
+                    <button class="btn-add" onclick="exportarPagamentos()">Exportar CSV</button>
+                </div>
+                <div class="tabela-container">
+                    <table class="tabela-admin">
+                        <thead>
+                            <tr>
+                                <th>Aluno</th>
+                                <th>E-mail</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                                <th>Data</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-pagamentos"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Seção Configurações -->
+            <div class="admin-secao hidden" id="secao-config">
+                <div class="secao-header">
+                    <h2>Configurações</h2>
+                </div>
+                <div class="config-grid">
+                    <div class="config-card">
+                        <h3>Valor do Acesso</h3>
+                        <div class="config-input-group">
+                            <span>R$</span>
+                            <input type="number" id="config-valor" value="10.00" step="0.01" min="0">
+                        </div>
+                        <button class="btn-admin" onclick="salvarConfig()">Salvar</button>
+                    </div>
+                    <div class="config-card">
+                        <h3>Chave PIX</h3>
+                        <input type="text" id="config-chave-pix" placeholder="Sua chave PIX">
+                        <button class="btn-admin" onclick="salvarConfig()">Salvar</button>
+                    </div>
+                    <div class="config-card">
+                        <h3>Nome Recebedor PIX</h3>
+                        <input type="text" id="config-nome-pix" placeholder="Nome que aparece no PIX">
+                        <button class="btn-admin" onclick="salvarConfig()">Salvar</button>
+                    </div>
+                    <div class="config-card">
+                        <h3>Admin</h3>
+                        <div class="form-group">
+                            <label>E-mail</label>
+                            <input type="email" id="config-admin-email" value="admin@eletrocursos.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Senha</label>
+                            <input type="password" id="config-admin-senha" value="admin123">
+                        </div>
+                        <button class="btn-admin" onclick="salvarConfig()">Salvar</button>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
+
+    <!-- Modal Curso -->
+    <div class="modal-overlay hidden" id="modal-curso">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-titulo">Novo Curso</h3>
+                <button class="modal-fechar" onclick="fecharModalCurso()">✕</button>
+            </div>
+            <form id="form-curso" onsubmit="salvarCurso(event)">
+                <input type="hidden" id="curso-id">
+                <div class="form-group">
+                    <label>Título</label>
+                    <input type="text" id="curso-titulo" required>
+                </div>
+                <div class="form-group">
+                    <label>Categoria</label>
+                    <select id="curso-categoria" required>
+                        <option value="">Selecione...</option>
+                        <option value="elétrica">Elétrica</option>
+                        <option value="eletrônica">Eletrônica</option>
+                        <option value="industrial">Industrial</option>
+                        <option value="energia-solar">Energia Solar</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <textarea id="curso-descricao" rows="3" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Carga Horária</label>
+                        <input type="number" id="curso-carga" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nível</label>
+                        <select id="curso-nivel" required>
+                            <option value="">Selecione...</option>
+                            <option value="Iniciante">Iniciante</option>
+                            <option value="Intermediário">Intermediário</option>
+                            <option value="Avançado">Avançado</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn-auth">Salvar Curso</button>
+            </form>
+        </div>
+    </div>
 
     <footer class="footer">
         <p>&copy; 2026 EletroCursos. Todos os direitos reservados.</p>
