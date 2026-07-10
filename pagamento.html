@@ -19,7 +19,7 @@
                 <li><a href="sobre.html">Sobre</a></li>
                 <li><a href="contato.html">Contato</a></li>
             </ul>
-            <a href="entrar.html" class="btn-entrar">Entrar</a>
+            <a href="entrar.html" class="btn-entrar" id="btn-entrar">Entrar</a>
         </nav>
     </header>
 
@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="qr-code-container">
-                        <img src="images/QR code pix.png" alt="QR Code PIX" class="qr-code-img">
+                        <img src="images/qrcode-pix.png" alt="QR Code PIX" class="qr-code-img">
                         <p class="qr-code-instrucao">Abra o app do seu banco, escaneie o QR Code ou copie o código PIX abaixo.</p>
                     </div>
 
@@ -47,7 +47,7 @@
                         <p class="pix-label">Código PIX (Copia e Cola):</p>
                         <div class="pix-codigo-container">
                             <code class="pix-codigo" id="pix-codigo">00020126580014br.gov.bcb.pix0136[SUA-CHAVE-PIX-AQUI]5204000053039865802BR5925[NOME-RECEBEDOR]6009[SÃO PAULO]62070503***6304[CRC]</code>
-                            <button class="btn-copiar" onclick="copiarPix()">Copiar</button>
+                            <button class="btn-copiar">Copiar</button>
                         </div>
                     </div>
 
@@ -64,19 +64,6 @@
         <p>&copy; 2026 EletroCursos. Todos os direitos reservados.</p>
     </footer>
 
-    <script>
-        function copiarPix() {
-            const codigo = document.getElementById('pix-codigo').textContent;
-            navigator.clipboard.writeText(codigo).then(() => {
-                const btn = document.querySelector('.btn-copiar');
-                btn.textContent = 'Copiado!';
-                btn.classList.add('copiado');
-                setTimeout(() => {
-                    btn.textContent = 'Copiar';
-                    btn.classList.remove('copiado');
-                }, 2000);
-            });
-        }
-    </script>
+    <script src="js/script.js"></script>
 </body>
 </html>
