@@ -1,6 +1,26 @@
-// ==================== CONFIGURAÇÃO ADMIN ====================
-const ADMIN_EMAIL = 'admin@eletrocursos.com';
-const ADMIN_SENHA = 'admin123';
+// ==================== CONFIGURAÇÃO ====================
+let CONFIG = {
+    adminEmail: 'admin@eletrocursos.com',
+    adminSenha: 'admin123',
+    valorAcesso: 10.00,
+    chavePix: '[SUA-CHAVE-PIX-AQUI]',
+    nomePix: '[NOME-RECEBEDOR]'
+};
+
+// Dados iniciais
+let cursos = [
+    { id: 1, titulo: 'Eletricista Residencial', categoria: 'elétrica', descricao: 'Aprenda instalações elétricas residenciais do zero, com normas técnicas e segurança.', carga: 40, nivel: 'Iniciante' },
+    { id: 2, titulo: 'NR-10 - Segurança em Instalações Elétricas', categoria: 'elétrica', descricao: 'Normas regulamentadoras, medidas de controle de risco e segurança em serviços com eletricidade.', carga: 20, nivel: 'Intermediário' },
+    { id: 3, titulo: 'Eletrônica Básica', categoria: 'eletrônica', descricao: 'Componentes, circuitos, medições e solda. Curso prático para iniciantes.', carga: 30, nivel: 'Iniciante' },
+    { id: 4, titulo: 'Microcontroladores e Arduino', categoria: 'eletrônica', descricao: 'Programação de microcontroladores, sensores, atuadores e projetos práticos.', carga: 50, nivel: 'Intermediário' },
+    { id: 5, titulo: 'Comandos Elétricos', categoria: 'industrial', descricao: 'Motores, contatores, relés, diagramas de comando e automação industrial.', carga: 45, nivel: 'Intermediário' },
+    { id: 6, titulo: 'CLP e Automação Industrial', categoria: 'industrial', descricao: 'Controladores lógicos programáveis, linguagem ladder e automação de processos.', carga: 60, nivel: 'Avançado' },
+    { id: 7, titulo: 'Energia Solar Fotovoltaica', categoria: 'energia-solar', descricao: 'Dimensionamento, instalação e manutenção de sistemas de energia solar.', carga: 35, nivel: 'Intermediário' },
+    { id: 8, titulo: 'Projetos de Energia Solar', categoria: 'energia-solar', descricao: 'Aprenda a elaborar projetos completos de energia solar.', carga: 25, nivel: 'Avançado' }
+];
+
+let alunos = JSON.parse(localStorage.getItem('alunos') || '[]');
+let pagamentos = JSON.parse(localStorage.getItem('pagamentos') || '[]');
 
 // ==================== NAVBAR ATIVO ====================
 function destacarPaginaAtual() {
@@ -55,12 +75,7 @@ function inicializarFiltros() {
 
             cards.forEach(card => {
                 const cardCategoria = card.getAttribute('data-categoria');
-
-                if (categoria === 'todos') {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = cardCategoria === categoria ? 'flex' : 'none';
-                }
+                card.style.display = (categoria === 'todos' || cardCategoria === categoria) ? 'flex' : 'none';
             });
         });
     });
@@ -94,15 +109,14 @@ function fazerLogin(event) {
     const email = document.getElementById('login-email').value;
     const senha = document.getElementById('login-senha').value;
 
-    if (email === ADMIN_EMAIL && senha === ADMIN_SENHA) {
+    if (email === CONFIG.adminEmail && senha === CONFIG.adminSenha) {
         const usuario = { nome: 'Administrador', email: email, tipo: 'admin' };
         sessionStorage.setItem('usuarioLogado', JSON.stringify(usuario));
-        alert('Login de administrador realizado com sucesso!');
         window.location.href = 'admin.html';
     } else {
         const usuario = { nome: 'Aluno', email: email, tipo: 'aluno' };
         sessionStorage.setItem('usuarioLogado', JSON.stringify(usuario));
-        alert('Login realizado com sucesso! Redirecionando para pagamento...');
+        salvarAluno(usuario);
         window.location.href = 'pagamento.html';
     }
 }
@@ -116,15 +130,27 @@ function fazerCadastro(event) {
 
     const usuario = { nome: nome, email: email, tipo: 'aluno' };
     sessionStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+    salvarAluno(usuario);
 
-    alert('Cadastro realizado com sucesso! Redirecionando para pagamento...');
     window.location.href = 'pagamento.html';
+}
+
+// ==================== SALVAR ALUNO ====================
+function salvarAluno(usuario) {
+    const existe = alunos.find(a => a.email === usuario.email);
+    if (!existe) {
+        alunos.push({
+            ...usuario,
+            dataCadastro: new Date().toLocaleDateString('pt-BR'),
+            pago: false
+        });
+        localStorage.setItem('alunos', JSON.stringify(alunos));
+    }
 }
 
 // ==================== SAIR ====================
 function sair() {
     sessionStorage.removeItem('usuarioLogado');
-    alert('Você saiu da sua conta.');
     window.location.href = 'index.html';
 }
 
@@ -152,7 +178,6 @@ function inicializarRolagemSuave() {
         link.addEventListener('click', (e) => {
             const href = link.getAttribute('href');
             if (href === '#') return;
-
             const alvo = document.querySelector(href);
             if (alvo) {
                 e.preventDefault();
@@ -162,11 +187,247 @@ function inicializarRolagemSuave() {
     });
 }
 
+// ==================== ADMIN: TABS ====================
+function mostrarSecao(secao) {
+    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('ativo'));
+    document.querySelectorAll('.admin-secao').forEach(s => s.classList.add('hidden'));
+
+    const tab = Array.from(document.querySelectorAll('.admin-tab')).find(t => t.textContent.trim().toLowerCase().includes(secao));
+    if (tab) tab.classList.add('ativo');
+
+    const secaoEl = document.getElementById(`secao-${secao}`);
+    if (secaoEl) secaoEl.classList.remove('hidden');
+
+    if (secao === 'cursos') renderizarCursosAdmin();
+    if (secao === 'alunos') renderizarAlunosAdmin();
+    if (secao === 'pagamentos') renderizarPagamentosAdmin();
+    if (secao === 'config') carregarConfig();
+}
+
+// ==================== ADMIN: DASHBOARD ====================
+function atualizarDashboard() {
+    const totalCursos = cursos.length;
+    const totalAlunos = alunos.length;
+    const totalPagos = alunos.filter(a => a.pago).length;
+    const receita = totalPagos * CONFIG.valorAcesso;
+
+    document.getElementById('total-cursos').textContent = totalCursos;
+    document.getElementById('total-alunos').textContent = totalAlunos;
+    document.getElementById('total-pagos').textContent = totalPagos;
+    document.getElementById('total-receita').textContent = `R$ ${receita.toFixed(2)}`;
+}
+
+// ==================== ADMIN: CURSOS ====================
+function renderizarCursosAdmin() {
+    const tbody = document.getElementById('tabela-cursos');
+    tbody.innerHTML = cursos.map(curso => `
+        <tr>
+            <td>${curso.titulo}</td>
+            <td><span class="tag">${curso.categoria}</span></td>
+            <td>${curso.carga}h</td>
+            <td>${curso.nivel}</td>
+            <td class="acoes">
+                <button class="btn-editar" onclick="editarCurso(${curso.id})">Editar</button>
+                <button class="btn-excluir" onclick="excluirCurso(${curso.id})">Excluir</button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function abrirModalCurso(id = null) {
+    document.getElementById('modal-curso').classList.remove('hidden');
+
+    if (id) {
+        const curso = cursos.find(c => c.id === id);
+        document.getElementById('modal-titulo').textContent = 'Editar Curso';
+        document.getElementById('curso-id').value = curso.id;
+        document.getElementById('curso-titulo').value = curso.titulo;
+        document.getElementById('curso-categoria').value = curso.categoria;
+        document.getElementById('curso-descricao').value = curso.descricao;
+        document.getElementById('curso-carga').value = curso.carga;
+        document.getElementById('curso-nivel').value = curso.nivel;
+    } else {
+        document.getElementById('modal-titulo').textContent = 'Novo Curso';
+        document.getElementById('form-curso').reset();
+        document.getElementById('curso-id').value = '';
+    }
+}
+
+function fecharModalCurso() {
+    document.getElementById('modal-curso').classList.add('hidden');
+}
+
+function salvarCurso(event) {
+    event.preventDefault();
+
+    const id = document.getElementById('curso-id').value;
+    const dados = {
+        titulo: document.getElementById('curso-titulo').value,
+        categoria: document.getElementById('curso-categoria').value,
+        descricao: document.getElementById('curso-descricao').value,
+        carga: parseInt(document.getElementById('curso-carga').value),
+        nivel: document.getElementById('curso-nivel').value
+    };
+
+    if (id) {
+        const index = cursos.findIndex(c => c.id === parseInt(id));
+        cursos[index] = { ...cursos[index], ...dados };
+    } else {
+        const novoId = cursos.length ? Math.max(...cursos.map(c => c.id)) + 1 : 1;
+        cursos.push({ id: novoId, ...dados });
+    }
+
+    fecharModalCurso();
+    renderizarCursosAdmin();
+    atualizarDashboard();
+}
+
+function editarCurso(id) {
+    abrirModalCurso(id);
+}
+
+function excluirCurso(id) {
+    if (confirm('Tem certeza que deseja excluir este curso?')) {
+        cursos = cursos.filter(c => c.id !== id);
+        renderizarCursosAdmin();
+        atualizarDashboard();
+    }
+}
+
+// ==================== ADMIN: ALUNOS ====================
+function renderizarAlunosAdmin() {
+    const tbody = document.getElementById('tabela-alunos');
+    tbody.innerHTML = alunos.map(aluno => `
+        <tr>
+            <td>${aluno.nome}</td>
+            <td>${aluno.email}</td>
+            <td><span class="${aluno.pago ? 'status-pago' : 'status-pendente'}">${aluno.pago ? 'Pago' : 'Pendente'}</span></td>
+            <td>${aluno.dataCadastro}</td>
+            <td class="acoes">
+                ${!aluno.pago ? `<button class="btn-editar" onclick="marcarComoPago('${aluno.email}')">Marcar Pago</button>` : ''}
+                <button class="btn-excluir" onclick="excluirAluno('${aluno.email}')">Excluir</button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function marcarComoPago(email) {
+    const aluno = alunos.find(a => a.email === email);
+    if (aluno) {
+        aluno.pago = true;
+        pagamentos.push({
+            aluno: aluno.nome,
+            email: aluno.email,
+            valor: CONFIG.valorAcesso,
+            data: new Date().toLocaleDateString('pt-BR')
+        });
+        localStorage.setItem('alunos', JSON.stringify(alunos));
+        localStorage.setItem('pagamentos', JSON.stringify(pagamentos));
+        renderizarAlunosAdmin();
+        atualizarDashboard();
+    }
+}
+
+function excluirAluno(email) {
+    if (confirm('Tem certeza que deseja excluir este aluno?')) {
+        alunos = alunos.filter(a => a.email !== email);
+        localStorage.setItem('alunos', JSON.stringify(alunos));
+        renderizarAlunosAdmin();
+        atualizarDashboard();
+    }
+}
+
+// ==================== ADMIN: PAGAMENTOS ====================
+function renderizarPagamentosAdmin() {
+    const tbody = document.getElementById('tabela-pagamentos');
+    tbody.innerHTML = pagamentos.map(p => `
+        <tr>
+            <td>${p.aluno}</td>
+            <td>${p.email}</td>
+            <td>R$ ${p.valor.toFixed(2)}</td>
+            <td><span class="status-pago">Pago</span></td>
+            <td>${p.data}</td>
+            <td class="acoes">
+                <button class="btn-excluir" onclick="excluirPagamento('${p.email}')">Excluir</button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function excluirPagamento(email) {
+    if (confirm('Tem certeza que deseja excluir este pagamento?')) {
+        pagamentos = pagamentos.filter(p => p.email !== email);
+        const aluno = alunos.find(a => a.email === email);
+        if (aluno) aluno.pago = false;
+        localStorage.setItem('alunos', JSON.stringify(alunos));
+        localStorage.setItem('pagamentos', JSON.stringify(pagamentos));
+        renderizarPagamentosAdmin();
+        atualizarDashboard();
+    }
+}
+
+// ==================== ADMIN: CONFIG ====================
+function carregarConfig() {
+    document.getElementById('config-valor').value = CONFIG.valorAcesso;
+    document.getElementById('config-chave-pix').value = CONFIG.chavePix;
+    document.getElementById('config-nome-pix').value = CONFIG.nomePix;
+    document.getElementById('config-admin-email').value = CONFIG.adminEmail;
+    document.getElementById('config-admin-senha').value = CONFIG.adminSenha;
+}
+
+function salvarConfig() {
+    CONFIG.valorAcesso = parseFloat(document.getElementById('config-valor').value);
+    CONFIG.chavePix = document.getElementById('config-chave-pix').value;
+    CONFIG.nomePix = document.getElementById('config-nome-pix').value;
+    CONFIG.adminEmail = document.getElementById('config-admin-email').value;
+    CONFIG.adminSenha = document.getElementById('config-admin-senha').value;
+
+    localStorage.setItem('config', JSON.stringify(CONFIG));
+    alert('Configurações salvas com sucesso!');
+    atualizarDashboard();
+}
+
+// ==================== ADMIN: EXPORTAR ====================
+function exportarAlunos() {
+    let csv = 'Nome;Email;Status;Data Cadastro\n';
+    alunos.forEach(a => {
+        csv += `${a.nome};${a.email};${a.pago ? 'Pago' : 'Pendente'};${a.dataCadastro}\n`;
+    });
+    baixarCSV(csv, 'alunos.csv');
+}
+
+function exportarPagamentos() {
+    let csv = 'Aluno;Email;Valor;Data\n';
+    pagamentos.forEach(p => {
+        csv += `${p.aluno};${p.email};R$ ${p.valor.toFixed(2)};${p.data}\n`;
+    });
+    baixarCSV(csv, 'pagamentos.csv');
+}
+
+function baixarCSV(csv, nomeArquivo) {
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = nomeArquivo;
+    link.click();
+}
+
 // ==================== INICIALIZAÇÃO ====================
+function inicializarAdmin() {
+    const configSalva = localStorage.getItem('config');
+    if (configSalva) CONFIG = JSON.parse(configSalva);
+
+    if (window.location.pathname.includes('admin.html')) {
+        atualizarDashboard();
+        renderizarCursosAdmin();
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     destacarPaginaAtual();
     verificarUsuarioLogado();
     inicializarFiltros();
     inicializarBotaoCopiar();
     inicializarRolagemSuave();
+    inicializarAdmin();
 });
