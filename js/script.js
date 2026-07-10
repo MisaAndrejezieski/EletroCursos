@@ -7,7 +7,6 @@ let CONFIG = {
     nomePix: '[NOME-RECEBEDOR]'
 };
 
-// Dados iniciais
 let cursos = [
     { id: 1, titulo: 'Eletricista Residencial', categoria: 'elétrica', descricao: 'Aprenda instalações elétricas residenciais do zero, com normas técnicas e segurança.', carga: 40, nivel: 'Iniciante' },
     { id: 2, titulo: 'NR-10 - Segurança em Instalações Elétricas', categoria: 'elétrica', descricao: 'Normas regulamentadoras, medidas de controle de risco e segurança em serviços com eletricidade.', carga: 20, nivel: 'Intermediário' },
@@ -52,17 +51,7 @@ function verificarUsuarioLogado() {
             btnEntrar.href = 'admin.html';
             btnEntrar.style.color = '#f0c040';
             btnEntrar.style.borderColor = '#f0c040';
-        } else {
-            btnEntrar.textContent = 'Meus Cursos';
-            btnEntrar.href = '#';
-            btnEntrar.style.color = '#22c55e';
-            btnEntrar.style.borderColor = '#22c55e';
         }
-    } else {
-        btnEntrar.textContent = 'Entrar';
-        btnEntrar.href = 'entrar.html';
-        btnEntrar.style.color = '#f0c040';
-        btnEntrar.style.borderColor = '#f0c040';
     }
 }
 
@@ -498,13 +487,11 @@ function baixarCSV(csv, nomeArquivo) {
 
 // ==================== INICIALIZAÇÃO ====================
 function inicializarAdmin() {
-    // Carrega configurações salvas
     const configSalva = localStorage.getItem('config');
     if (configSalva) {
         CONFIG = { ...CONFIG, ...JSON.parse(configSalva) };
     }
 
-    // Se estiver na página admin, verifica acesso
     if (window.location.pathname.includes('admin.html')) {
         if (!verificarAcessoAdmin()) return;
         atualizarDashboard();
